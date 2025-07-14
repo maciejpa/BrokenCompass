@@ -11,7 +11,7 @@ Hooks.once("init", async () => {
   console.log(`BrokenCompass | Initializing Broken Compass game system`);
 
   // Initialise config
-  CONFIG.Actor.entityClass = BCActor;
+  CONFIG.Actor.documentClass = BCActor;
 
   // Preload all needed templates
   // await TemplatePreloader.preloadHandlebarsTemplates();

@@ -5,7 +5,7 @@ export async function chatDiceRoll(diceAmount, keepPairs, rollCount, actor, expe
 
   const template = "systems/brokencompass/templates/chat/roll-result.hbs";
 
-  const roll = await new Roll(`${diceAmount}d6`).roll();
+  const roll = await new Roll(`${diceAmount}d6`).evaluate({ async: true });
   const results = roll.terms[0] && roll.terms[0].results ? roll.terms[0].results : [];
   const dice = results.reduce((acc, curVal) => [...acc, curVal.result], []);
   let rollResult = evalDiceRoll(dice, keepPairs, rollCount);
@@ -34,7 +34,7 @@ export async function chatDiceRoll(diceAmount, keepPairs, rollCount, actor, expe
     allIn: rollResult.restDice.length && rollCount === 1 && rollResult.hasGenerateSuccess,
   };
   const chatData = {
-    user: game.user?._id,
+    user: game.user.id,
     speaker: ChatMessage.getSpeaker({ actor }),
     sound: CONFIG.sounds.dice,
     roll: roll,

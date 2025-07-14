@@ -79,11 +79,11 @@ export class BCActorSheet extends ActorSheet {
       return;
     }
 
-    const roll = await new Roll(`1dc`).roll();
+    const roll = await new Roll(`1dc`).evaluate({ async: true });
     const results = roll.terms[0] && roll.terms[0].results ? roll.terms[0].results : [];
 
     const chatData = {
-      user: game.user?._id,
+      user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       sound: CONFIG.sounds.dice,
       roll: roll,
@@ -132,7 +132,7 @@ export class BCActorSheet extends ActorSheet {
 
       return {
         name: field.name,
-        value: this.actor.data.data.fields[field.name],
+        value: this.actor.system.fields[field.name],
         label: game.i18n.localize(`BC.Sheet.Fields.${this.capitalisation(field.name)}`),
         skills: skills,
         path: `system.fields.${field.name}`,
